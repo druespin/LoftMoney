@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.loftmoney.ChargeModel
 import com.example.loftmoney.R
 
-class ItemsAdapter(var itemsList: ArrayList<ChargeModel>) :
-    RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class ItemsAdapter : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+
+    private var itemsList = ArrayList<ChargeModel>()
 
     fun setNewData(newData: List<ChargeModel>) {
         itemsList.clear()
@@ -40,8 +41,8 @@ class ItemsAdapter(var itemsList: ArrayList<ChargeModel>) :
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
-        val itemName: TextView = v.findViewById(R.id.item_name)
-        val itemPrice: TextView = v.findViewById(R.id.item_price)
+        private val itemName: TextView = v.findViewById(R.id.item_name)
+        private val itemPrice: TextView = v.findViewById(R.id.item_price)
 
         fun bind(chargeModel: ChargeModel) {
             itemName.text = chargeModel.chargeName
