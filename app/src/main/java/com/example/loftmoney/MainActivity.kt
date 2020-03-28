@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private val logTag = "LOFT"
     private val adapter = ItemsAdapter()
     private val ADD_ITEM_REQUEST: Int = 1
 
@@ -23,16 +24,14 @@ class MainActivity : AppCompatActivity() {
         val recyclerView : RecyclerView = findViewById(R.id.recycler)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-        // items.add(ChargeModel("food","900"))
-
         recyclerView.adapter = adapter
 
         // Invoke Add new item activity
-        fab_main.setOnClickListener {
+        btn_fab_main.setOnClickListener {
             val intent = Intent(this, AddItemActivity::class.java)
             startActivityForResult(intent, ADD_ITEM_REQUEST)
 
-            Log.i("LOGS: ", "add item request")
+            Log.i(logTag, "Add Item Request")
         }
     }
 
@@ -44,8 +43,8 @@ class MainActivity : AppCompatActivity() {
             resultCode == Activity.RESULT_OK &&
             data != null) {
 
-            val getNewItem = data.getSerializableExtra(extraKey)
-            adapter.addItem(getNewItem as ChargeModel)
+            val getNewItem = data.getParcelableExtra<ChargeModel>(extraKey)
+            adapter.addItem(getNewItem)
         }
     }
 }

@@ -2,5 +2,5 @@
     <string name="app_name">LoftMoney</string>
     <string name="item_name">Name</string>
     <string name="item_price">Price</string>
-    <string name="add_item">Add</string>
+    <string name="add_item">ADD ITEM</string>
 </resources>

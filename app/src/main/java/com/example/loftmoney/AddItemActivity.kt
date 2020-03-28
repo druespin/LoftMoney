@@ -4,36 +4,40 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_item.*
-import java.io.Serializable
 
 
 class AddItemActivity : AppCompatActivity() {
+
+    private val logTag = "LOFT"
+    private val extraKey = "get item"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item)
 
-        val itemName = item_name.text.toString()
-        val itemPrice = item_price.text.toString()
+        val name = item_name.text
+        val price = item_price.text
 
         btn_add_item.setOnClickListener{
 
-            if (TextUtils.isEmpty(itemName) || TextUtils.isEmpty(itemPrice))   {
+            if (name.isNullOrEmpty() || price.isNullOrEmpty()) {
+                Toast.makeText(this, "Both fields should be filled out",
+                    Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val newItem = ChargeModel(itemName, itemPrice)
-            val extraKey = "get item"
-            val intent: Intent = Intent().apply {
-                putExtra(extraKey, newItem as Serializable)
-            }
-            setResult(Activity.RESULT_OK, intent)
+            val newItem = ChargeModel(name.toString(), price.toString())
 
-            Log.i("LOGS", "New Item created")
+            Intent().apply {
+                putExtra(extraKey, newItem)
+                setResult(Activity.RESULT_OK, this)
+            }
+
+            Log.i(logTag,"New Item created")
             finish()
+            }
         }
     }
-}

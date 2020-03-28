@@ -1,10 +1,10 @@
 package com.example.loftmoney
 
-import kotlinx.serialization.Serializable
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
 
-@Serializable
-class ChargeModel (
-    var chargeName: String,
-    var chargePrice: String
-)
+@Parcelize
+class ChargeModel
+    (val chargeName: String,
+     val chargePrice: String) : Parcelable

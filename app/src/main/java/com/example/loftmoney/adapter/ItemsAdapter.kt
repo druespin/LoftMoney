@@ -38,7 +38,6 @@ class ItemsAdapter : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
         holder.bind(itemsList[position])
     }
 
-
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
         private val itemName: TextView = v.findViewById(R.id.item_name)
