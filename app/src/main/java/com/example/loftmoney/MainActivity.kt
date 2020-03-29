@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.loftmoney.adapter.ItemsAdapter
@@ -23,6 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView : RecyclerView = findViewById(R.id.recycler)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(this, LinearLayoutManager.VERTICAL)
+        )
 
         recyclerView.adapter = adapter
 

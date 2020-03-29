@@ -37,12 +37,5 @@
             android:layout_gravity="end"/>
     </LinearLayout>
 
-    <View
-        android:id="@+id/row_divider"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divider_height"
-        android:layout_gravity="bottom"
-        android:background="@color/item_name_color"
-        />
 
 </LinearLayout>

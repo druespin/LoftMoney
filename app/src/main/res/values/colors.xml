@@ -6,5 +6,5 @@
 
     <color name="item_name_color">#666664</color>
     <color name="item_price_color">#4a90e2</color>
-    <color name="fab_main_color">#ffc107</color>
+    <color name="fab_main_color">#FFC107</color>
 </resources>
