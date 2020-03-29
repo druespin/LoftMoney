@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="divider_height">1sp</dimen>
+    <dimen name="item_text_size">25sp</dimen>
+    <dimen name="add_btn_txt">14sp</dimen>
+</resources>
