@@ -1,17 +1,16 @@
 package com.example.loftmoney
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.loftmoney.adapter.ItemsAdapter
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,13 +19,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction
-            .add(R.id.fragment_container, BudgetFragment())
-            .commit()
+        view_pager.adapter = BudgetPagerdapter(supportFragmentManager)
+        tabs.setupWithViewPager(view_pager)
+    }
 
-        val tabs: TabLayout = findViewById(R.id.tabs)
-        tabs.addTab(tabs.newTab().setText(R.string.expenses))
-        tabs.addTab(tabs.newTab().setText(R.string.incomes))
+    class BudgetPagerdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+
+        override fun getItem(position: Int): Fragment {
+            return BudgetFragment()
+        }
+
+        override fun getCount(): Int {
+            return 2
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return arrayOf("EXPENSES", "INCOMES")[position]
+        }
     }
 }
