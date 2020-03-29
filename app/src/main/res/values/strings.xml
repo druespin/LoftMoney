@@ -3,4 +3,6 @@
     <string name="item_name">Name</string>
     <string name="item_price">Price</string>
     <string name="add_item">ADD ITEM</string>
+    <string name="expenses">EXPENSES</string>
+    <string name="incomes">INCOMES</string>
 </resources>
