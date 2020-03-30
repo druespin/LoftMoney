@@ -11,9 +11,6 @@ import kotlinx.android.synthetic.main.activity_add_item.*
 
 class AddItemActivity : AppCompatActivity() {
 
-    private val logTag = "LOFT"
-    private val extraKey = "get item"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item)
@@ -32,11 +29,11 @@ class AddItemActivity : AppCompatActivity() {
             val newItem = ChargeModel(name.toString(), price.toString())
 
             Intent().apply {
-                putExtra(extraKey, newItem)
+                putExtra(EXTRA_KEY, newItem)
                 setResult(Activity.RESULT_OK, this)
             }
 
-            Log.i(logTag,"New Item created")
+            Log.i(LOG_TAG,"New Item created")
             finish()
             }
         }
