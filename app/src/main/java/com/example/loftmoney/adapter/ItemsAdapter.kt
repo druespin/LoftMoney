@@ -10,7 +10,7 @@ import com.example.loftmoney.R
 
 class ItemsAdapter : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
 
-    private var itemsList = ArrayList<ChargeModel>()
+    private val itemsList = ArrayList<ChargeModel>()
 
     fun setNewData(newData: List<ChargeModel>) {
         itemsList.clear()
