@@ -12,55 +12,106 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.loftmoney.adapter.ItemsAdapter
+import com.example.loftmoney.web.ApiService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_budget.view.*
 
-const val LOG_TAG = "LOFT"
-const val ADD_ITEM_REQUEST = 11
-const val EXTRA_KEY = "extrakey"
+const val LOFT_TAG = "LOFT"
+const val EXTRA_KEY = "extra key"
+const val ADD_EXPENSE_ITEM = "expense"
+const val ADD_INCOME_ITEM = "income"
+
 
 class BudgetFragment : Fragment() {
 
     private val adapter = ItemsAdapter()
+    private val disposable = CompositeDisposable()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-        ): View? {
-        val view: View = inflater.inflate(R.layout.fragment_budget, container, false)
-        return view
+    ): View? {
+        return inflater.inflate(R.layout.fragment_budget, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView : RecyclerView = view.findViewById(R.id.recycler)
+        val recyclerView: RecyclerView = view.findViewById(R.id.recycler)
         recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-
         recyclerView.addItemDecoration(
             DividerItemDecoration(activity, LinearLayoutManager.VERTICAL)
         )
-
         recyclerView.adapter = adapter
 
-        // Click Add new item activity
+        /**
+         *  Get data from server based on the current fragment
+         */
+        arguments?.takeIf { it.containsKey(FRAGMENT_KEY) }?.apply {
+
+            loadItems()
+        }
+
+        /**
+         *  Click Add New Item
+         */
         view.btn_fab_main.setOnClickListener {
             val intent = Intent(activity, AddItemActivity::class.java)
-            startActivityForResult(intent, ADD_ITEM_REQUEST)
 
-            Log.i(LOG_TAG, "Add Item Request")
+            when (arguments?.get(FRAGMENT_KEY)) {
+                0 -> intent.putExtra(EXTRA_KEY, ADD_EXPENSE_ITEM)
+                1 -> intent.putExtra(EXTRA_KEY, ADD_INCOME_ITEM)
+            }
+            startActivity(intent)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    override fun onResume() {
+        super.onResume()
+        loadItems()
+    }
 
-        if (requestCode == ADD_ITEM_REQUEST &&
-            resultCode == Activity.RESULT_OK &&
-            data != null) {
+    override fun onStop() {
+        super.onStop()
+        disposable.clear()
+    }
 
-            val getNewItem = data.getParcelableExtra<ChargeModel>(EXTRA_KEY)
-            adapter.addItem(getNewItem)
+
+    private fun loadItems() {
+        when (arguments?.get(FRAGMENT_KEY)) {
+            0 -> loadItemsFromServer("expense")
+            1 -> loadItemsFromServer("income")
         }
+    }
+
+    private fun loadItemsFromServer(type: String) {
+        val chargeList = ArrayList<ChargeModel>()
+        val responseFromApi = ApiService.createApiService.getItems(type)
+
+        disposable.add(responseFromApi
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                { response ->
+                    if (response.status == "success") {
+                        val dataList = response.data
+                        for (dataItem in dataList) {
+                            chargeList.add(ChargeModel(dataItem))
+                        }
+
+                        adapter.setNewData(chargeList)
+
+                    } else {
+                        Log.e("ERROR: ", response.status)
+                    }
+                },
+                { error("NO RESPONSE") }
+            )
+        )
     }
 }
+

@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
+const val FRAGMENT_KEY = "fragment"
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,16 +16,24 @@ class MainActivity : AppCompatActivity() {
 
         view_pager.adapter = BudgetPagerdapter(supportFragmentManager)
         tabs.setupWithViewPager(view_pager)
+
+        tabs.getTabAt(0)!!.setText(R.string.expenses)
+        tabs.getTabAt(1)!!.setText(R.string.incomes)
+
     }
 
-    class BudgetPagerdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    class BudgetPagerdapter(fm: FragmentManager) :
+        FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-        private val tabTitles = arrayOf("EXPENSES", "INCOMES")
+        override fun getItem(position: Int): BudgetFragment {
+            val fragment = BudgetFragment()
+            fragment.arguments = Bundle().apply {
 
-        override fun getItem(position: Int) = BudgetFragment()
+                putInt(FRAGMENT_KEY, position)
+            }
+            return fragment
+        }
 
         override fun getCount() = 2
-
-        override fun getPageTitle(position: Int) = tabTitles[position]
     }
 }
