@@ -1,31 +1,48 @@
 package com.example.loftmoney
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
-import androidx.core.app.BundleCompat
-import com.example.loftmoney.web.ApiService
 import com.example.loftmoney.web.ApiService.Companion.createApiService
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_item.*
 
 
 class AddItemActivity : AppCompatActivity() {
 
+    private var mName: String? = null
+    private var mPrice: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item)
 
-        val name = item_name.text
-        val price = item_price.text
+        item_name.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                mName = s.toString()
+                checkIfHasText()
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+        item_price.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                mPrice = s.toString()
+                checkIfHasText()
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
 
         val args = intent.getStringExtra(EXTRA_KEY)
 
@@ -43,7 +60,7 @@ class AddItemActivity : AppCompatActivity() {
         // Add Item button handler
         btn_add_item.setOnClickListener{
 
-            if (name.isNullOrEmpty() || price.isNullOrEmpty()) {
+            if (mName.isNullOrEmpty() || mPrice.isNullOrEmpty()) {
                 Toast.makeText(this, "Both fields should be populated", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -54,15 +71,21 @@ class AddItemActivity : AppCompatActivity() {
             /**
              *  Send new item to server
              */
-            postNewItemToServer(name.toString(),
-                Integer.parseInt(price.toString()),
+            if (reqType == null) {
+                Toast.makeText(this, "Request type is unknown", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            postAddedItemToServer(mName.toString(),
+                Integer.parseInt(mPrice.toString()),
                 reqType)
+
             finish()
         }
     }
 
 
-    private fun postNewItemToServer(name: String?, price: Int?, type: String?) {
+    private fun postAddedItemToServer(name: String?, price: Int?, type: String?) {
         val disposable = CompositeDisposable()
         val responseFromApi = createApiService.postItem(price, name, type)
 
@@ -76,6 +99,11 @@ class AddItemActivity : AppCompatActivity() {
                         Toast.makeText(this, "Transaction failed", Toast.LENGTH_SHORT).show()
                     })
             )
+    }
+
+    private fun checkIfHasText() {
+        btn_add_item.isEnabled =
+            !mName.isNullOrEmpty() && !mPrice.isNullOrEmpty()
     }
 }
 
