@@ -27,6 +27,19 @@ class AddItemActivity : AppCompatActivity() {
         val name = item_name.text
         val price = item_price.text
 
+        val args = intent.getStringExtra(EXTRA_KEY)
+
+        when (args) {
+            ADD_EXPENSE_ITEM -> {
+                item_name.setTextColor(resources.getColor(R.color.expense_text_color))
+                item_price.setTextColor(resources.getColor(R.color.expense_text_color))
+            }
+            ADD_INCOME_ITEM -> {
+                item_name.setTextColor(resources.getColor(R.color.income_text_color))
+                item_price.setTextColor(resources.getColor(R.color.income_text_color))
+            }
+        }
+
         // Add Item button handler
         btn_add_item.setOnClickListener{
 
@@ -42,12 +55,12 @@ class AddItemActivity : AppCompatActivity() {
              *  Send new item to server
              */
             postNewItemToServer(name.toString(),
-                                Integer.parseInt(price.toString()),
-                                reqType)
-
+                Integer.parseInt(price.toString()),
+                reqType)
             finish()
-            }
         }
+    }
+
 
     private fun postNewItemToServer(name: String?, price: Int?, type: String?) {
         val disposable = CompositeDisposable()

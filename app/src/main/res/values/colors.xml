@@ -8,4 +8,6 @@
     <color name="item_price_color">#4a90e2</color>
     <color name="fab_main_color">#FFC107</color>
     <color name="tabs_text">#fff</color>
+    <color name="expense_text_color">#4a90e2</color>
+    <color name="income_text_color">#7ed321</color>
 </resources>
