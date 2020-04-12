@@ -39,6 +39,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation 'com.google.android.material:material:1.1.0'
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     // rxjava2
     implementation "io.reactivex.rxjava2:rxandroid:$rxjava2_version"

@@ -1,11 +1,15 @@
 package com.example.loftmoney
 
+import android.content.res.Resources
+import android.content.res.Resources.Theme
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.example.loftmoney.web.ApiService.Companion.createApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -18,6 +22,7 @@ class AddItemActivity : AppCompatActivity() {
     private var mName: String? = null
     private var mPrice: String? = null
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item)
@@ -48,12 +53,12 @@ class AddItemActivity : AppCompatActivity() {
 
         when (args) {
             ADD_EXPENSE_ITEM -> {
-                item_name.setTextColor(resources.getColor(R.color.expense_text_color))
-                item_price.setTextColor(resources.getColor(R.color.expense_text_color))
+                item_name.setTextColor(resources.getColor(R.color.expense_text_color, theme))
+                item_price.setTextColor(resources.getColor(R.color.expense_text_color, theme))
             }
             ADD_INCOME_ITEM -> {
-                item_name.setTextColor(resources.getColor(R.color.income_text_color))
-                item_price.setTextColor(resources.getColor(R.color.income_text_color))
+                item_name.setTextColor(resources.getColor(R.color.income_text_color, theme))
+                item_price.setTextColor(resources.getColor(R.color.income_text_color, theme))
             }
         }
 
@@ -102,8 +107,7 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     private fun checkIfHasText() {
-        btn_add_item.isEnabled =
-            !mName.isNullOrEmpty() && !mPrice.isNullOrEmpty()
+        btn_add_item.isEnabled = !mName.isNullOrEmpty() && !mPrice.isNullOrEmpty()
     }
 }
 
