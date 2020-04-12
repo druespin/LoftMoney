@@ -5,4 +5,5 @@
     <string name="add_item"> ADD </string>
     <string name="expenses">EXPENSES</string>
     <string name="incomes">INCOMES</string>
+    <string name="toolbar_title">Budget</string>
 </resources>

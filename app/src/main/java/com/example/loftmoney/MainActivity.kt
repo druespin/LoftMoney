@@ -1,5 +1,6 @@
 package com.example.loftmoney
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentManager
@@ -20,6 +21,19 @@ class MainActivity : AppCompatActivity() {
         tabs.getTabAt(0)!!.setText(R.string.expenses)
         tabs.getTabAt(1)!!.setText(R.string.incomes)
 
+
+        /**
+         *  Click Add New Item
+         */
+        btn_fab_main.setOnClickListener {
+            val intent = Intent(this, AddItemActivity::class.java)
+
+            when (view_pager.currentItem) {
+                0 -> intent.putExtra(EXTRA_KEY, ADD_EXPENSE_ITEM)
+                1 -> intent.putExtra(EXTRA_KEY, ADD_INCOME_ITEM)
+            }
+            startActivity(intent)
+        }
     }
 
     class BudgetPagerdapter(fm: FragmentManager) :
