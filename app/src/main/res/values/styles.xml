@@ -3,13 +3,18 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorApp</item>
+        <item name="colorPrimaryDark">@color/colorAppDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="AddItemTheme" parent="Theme.AppCompat.NoActionBar">
-<item name="colorAccent">#ccc</item>
+        <item name="colorAccent">#ccc</item>
     </style>
 
+    <style name="AuthNameTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">36sp</item>
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

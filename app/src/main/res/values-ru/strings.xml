@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ЛофтДеньги</string>
-    <string name="hint_item_name">Назвние</string>
+    <string name="hint_item_name">Название</string>
     <string name="hint_item_price">Цена</string>
     <string name="add_item">Добавить</string>
+    <string name="btn_auth_text">ВОЙТИ</string>
 </resources>

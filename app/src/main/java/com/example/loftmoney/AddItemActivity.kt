@@ -1,5 +1,6 @@
 package com.example.loftmoney
 
+import android.content.Context
 import android.content.res.Resources
 import android.content.res.Resources.Theme
 import android.os.Build
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_add_item.*
 
 class AddItemActivity : AppCompatActivity() {
 
+    private val disposable = CompositeDisposable()
     private var mName: String? = null
     private var mPrice: String? = null
 
@@ -90,18 +92,25 @@ class AddItemActivity : AppCompatActivity() {
     }
 
 
-    private fun postAddedItemToServer(name: String?, price: Int?, type: String?) {
-        val disposable = CompositeDisposable()
-        val responseFromApi = createApiService.postItem(price, name, type)
+    private fun postAddedItemToServer(name: String, price: Int, type: String) {
+
+        val authToken = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+            .getString(AUTH_TOKEN_KEY, "no-token-received")
+
+        val responseFromApi = createApiService.postItem(price, name, type, authToken)
 
             disposable.add(responseFromApi
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Toast.makeText(this, "Item added successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Item added successfully",
+                        Toast.LENGTH_SHORT)
+                        .show()
                 },
                     {
-                        Toast.makeText(this, "Transaction failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Transaction failed",
+                            Toast.LENGTH_SHORT)
+                            .show()
                     })
             )
     }

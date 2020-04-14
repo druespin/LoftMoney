@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorApp">#3574FA</color>
+    <color name="colorAppDark">#3574fa</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="item_name_color">#666664</color>
@@ -10,4 +10,5 @@
     <color name="tabs_text">#fff</color>
     <color name="expense_text_color">#3574fa</color>
     <color name="income_text_color">#7ed321</color>
+    <color name="white">#fff</color>
 </resources>
