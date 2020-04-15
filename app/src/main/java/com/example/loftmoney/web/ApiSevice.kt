@@ -25,6 +25,10 @@ interface ApiService {
                 @Field("type") type: String,
                 @Field("auth-token") authToken: String): Completable
 
+    @POST("items/remove")
+    @FormUrlEncoded
+    fun removeItem(@Field("id") itemId: Int): Completable
+
 
     @GET("auth")
     fun getTokenForUser(@Query("social_user_id") userId: String): Observable<AuthResponse>

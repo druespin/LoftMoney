@@ -113,5 +113,22 @@ class BudgetFragment : Fragment() {
             )
         )
     }
+
+//    private fun removeItem(itemId: String) {
+//        val responseFromApi =
+//            ApiService.createApiService.removeItem(itemId)
+//
+//        disposable.add(responseFromApi
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeOn(Schedulers.io())
+//            .subscribe({
+//                Toast.makeText(activity, "Item deleted successfully", Toast.LENGTH_SHORT).show()
+//                adapter.notifyDataSetChanged()
+//            },
+//                {
+//                    Toast.makeText(activity, "Transaction failed", Toast.LENGTH_SHORT).show()
+//                })
+//        )
+//    }
 }
 

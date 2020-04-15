@@ -10,7 +10,7 @@
         <item name="android:actionMenuTextColor">@color/white</item>
     </style>
 
-    <style name="AddItemTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AddItemTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">#ccc</item>
     </style>
 

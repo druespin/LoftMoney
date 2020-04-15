@@ -1,5 +1,6 @@
 package com.example.loftmoney
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
 
         view_pager.adapter = BudgetPagerAdapter(supportFragmentManager)
         tabs.setupWithViewPager(view_pager)
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                 1 -> intent.putExtra(EXTRA_KEY, ADD_INCOME_ITEM)
             }
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }
 
@@ -53,13 +56,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        Log.e(LOFT_TAG, super.onOptionsItemSelected(item).toString())
-
         if (item?.itemId == R.id.menu_item_logout) {
             doLogout()
             return true
         }
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -77,8 +77,10 @@ class MainActivity : AppCompatActivity() {
                 }
             },
                 {
-                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT)
-                }))
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
+                }
+            )
+        )
     }
 
 
@@ -91,7 +93,6 @@ class MainActivity : AppCompatActivity() {
         FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): BudgetFragment {
-
             val fragment = BudgetFragment()
             fragment.arguments = Bundle().apply {
 
