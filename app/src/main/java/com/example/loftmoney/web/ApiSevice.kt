@@ -27,7 +27,14 @@ interface ApiService {
 
 
     @GET("auth")
-    fun getUserToken(@Query("social_user_id") userId: String): Observable<AuthResponse>
+    fun getTokenForUser(@Query("social_user_id") userId: String): Observable<AuthResponse>
+
+
+    @GET("logout")
+    fun logout(): Observable<Status>
+
+    @GET("balance")
+    fun getBalance(): Observable<Balance>
 
 
     companion object {

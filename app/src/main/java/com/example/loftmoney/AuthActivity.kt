@@ -1,12 +1,12 @@
 package com.example.loftmoney
 
-import android.app.Activity
+
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import androidx.appcompat.app.AppCompatActivity
 import com.example.loftmoney.web.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_auth.*
 
 const val AUTH_TOKEN_KEY = "auth-token-key"
 
-class AuthActivity : Activity() {
+class AuthActivity : AppCompatActivity() {
 
     private val disposable = CompositeDisposable()
 
@@ -32,7 +32,7 @@ class AuthActivity : Activity() {
 
     private fun doSignIn() {
         btn_auth.visibility = INVISIBLE
-        val getAuthRequest = ApiService.createApiService.getUserToken("drue")
+        val getAuthRequest = ApiService.createApiService.getTokenForUser("drue")
 
         disposable.add(getAuthRequest
             .observeOn(AndroidSchedulers.mainThread())

@@ -89,10 +89,8 @@ class BudgetFragment : Fragment() {
     }
 
     private fun loadItemsFromServer(type: String) {
-        val sharedPrefs = activity?.getSharedPreferences(
-            getString(R.string.app_name),
-            Context.MODE_PRIVATE
-        )
+        val sharedPrefs = activity?.getSharedPreferences(getString(R.string.app_name),
+                                                            Context.MODE_PRIVATE)
 
         val authToken = sharedPrefs!!.getString(AUTH_TOKEN_KEY, "no-token-received")
         val responseFromApi = ApiService.createApiService.getItems(type, authToken!!)

@@ -12,3 +12,12 @@ data class DataArray (
     val type: String,
     val date: String
 )
+
+data class Status(val status: String)
+
+data class Balance(
+    val status: String,
+    val totalExpense: String,
+    val totalIncome: String
+
+)

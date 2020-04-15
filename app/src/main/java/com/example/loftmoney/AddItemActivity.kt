@@ -51,9 +51,9 @@ class AddItemActivity : AppCompatActivity() {
             }
         })
 
-        val args = intent.getStringExtra(EXTRA_KEY)
+        val reqType = intent.getStringExtra(EXTRA_KEY)
 
-        when (args) {
+        when (reqType) {
             ADD_EXPENSE_ITEM -> {
                 item_name.setTextColor(resources.getColor(R.color.expense_text_color, theme))
                 item_price.setTextColor(resources.getColor(R.color.expense_text_color, theme))
@@ -64,25 +64,17 @@ class AddItemActivity : AppCompatActivity() {
             }
         }
 
-        // Add Item button handler
-        btn_add_item.setOnClickListener{
+        // ADD item button listener
+        btn_add_submit.setOnClickListener{
+
+            onLoadingData(true)
 
             if (mName.isNullOrEmpty() || mPrice.isNullOrEmpty()) {
                 Toast.makeText(this, "Both fields should be populated", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val reqType = intent?.getStringExtra(EXTRA_KEY)
-            Log.e(LOFT_TAG, reqType)
-
-            /**
-             *  Send new item to server
-             */
-            if (reqType == null) {
-                Toast.makeText(this, "Request type is unknown", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
+            // Send new item to server
             postAddedItemToServer(mName.toString(),
                 Integer.parseInt(mPrice.toString()),
                 reqType)
@@ -111,12 +103,20 @@ class AddItemActivity : AppCompatActivity() {
                         Toast.makeText(this, "Transaction failed",
                             Toast.LENGTH_SHORT)
                             .show()
+
+                        onLoadingData(false)
                     })
             )
     }
 
     private fun checkIfHasText() {
-        btn_add_item.isEnabled = !mName.isNullOrEmpty() && !mPrice.isNullOrEmpty()
+        btn_add_submit.isEnabled = !mName.isNullOrEmpty() && !mPrice.isNullOrEmpty()
+    }
+
+    private fun onLoadingData(state: Boolean) {
+        item_name.isEnabled = !state
+        item_price.isEnabled = !state
+        btn_add_submit.isEnabled = !state
     }
 }
 
