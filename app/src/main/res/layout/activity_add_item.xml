@@ -7,7 +7,7 @@
     tools:context=".AddItemActivity">
 
     <LinearLayout
-        android:layout_above="@+id/btn_add_item"
+        android:layout_above="@+id/btn_add_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="33dp"
@@ -44,15 +44,18 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_add_item"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_add_submit"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="@string/add_item"
         android:textSize="@dimen/add_btn_txt"
-        android:enabled="false"
         android:textColor="@color/btn_add_text_color"
+        android:background="@drawable/btn_add_submit_view"
         android:drawableStart="@drawable/check_add_selector"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:enabled="false"/>
 
 </RelativeLayout>

@@ -15,6 +15,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
     buildTypes {
         release {
@@ -40,6 +45,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0'
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'com.budiyev.android:circular-progress-bar:1.2.2'
 
     // rxjava2
     implementation "io.reactivex.rxjava2:rxandroid:$rxjava2_version"

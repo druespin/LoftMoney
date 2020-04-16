@@ -1,8 +1,11 @@
 package com.example.loftmoney.web
 
-data class ResponseItem(
+import com.google.gson.annotations.SerializedName
+
+data class AuthResponse(
     val status: String,
-    val data: List<DataArray>
+    @SerializedName("id") val userId: Int,
+    @SerializedName("auth_token") val authToken: String
 )
 
 data class DataArray (
@@ -11,4 +14,13 @@ data class DataArray (
     val price: Int,
     val type: String,
     val date: String
+)
+
+data class Status(val status: String)
+
+data class Balance(
+    val status: String,
+    val totalExpense: String,
+    val totalIncome: String
+
 )

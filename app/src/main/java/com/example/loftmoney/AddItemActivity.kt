@@ -1,5 +1,6 @@
 package com.example.loftmoney
 
+import android.content.Context
 import android.content.res.Resources
 import android.content.res.Resources.Theme
 import android.os.Build
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_add_item.*
 
 class AddItemActivity : AppCompatActivity() {
 
+    private val disposable = CompositeDisposable()
     private var mName: String? = null
     private var mPrice: String? = null
 
@@ -49,9 +51,9 @@ class AddItemActivity : AppCompatActivity() {
             }
         })
 
-        val args = intent.getStringExtra(EXTRA_KEY)
+        val reqType = intent.getStringExtra(EXTRA_KEY)
 
-        when (args) {
+        when (reqType) {
             ADD_EXPENSE_ITEM -> {
                 item_name.setTextColor(resources.getColor(R.color.expense_text_color, theme))
                 item_price.setTextColor(resources.getColor(R.color.expense_text_color, theme))
@@ -62,25 +64,17 @@ class AddItemActivity : AppCompatActivity() {
             }
         }
 
-        // Add Item button handler
-        btn_add_item.setOnClickListener{
+        // ADD item button listener
+        btn_add_submit.setOnClickListener{
+
+            onLoadingData(true)
 
             if (mName.isNullOrEmpty() || mPrice.isNullOrEmpty()) {
                 Toast.makeText(this, "Both fields should be populated", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val reqType = intent?.getStringExtra(EXTRA_KEY)
-            Log.e(LOFT_TAG, reqType)
-
-            /**
-             *  Send new item to server
-             */
-            if (reqType == null) {
-                Toast.makeText(this, "Request type is unknown", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
+            // Send new item to server
             postAddedItemToServer(mName.toString(),
                 Integer.parseInt(mPrice.toString()),
                 reqType)
@@ -89,25 +83,44 @@ class AddItemActivity : AppCompatActivity() {
         }
     }
 
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
 
-    private fun postAddedItemToServer(name: String?, price: Int?, type: String?) {
-        val disposable = CompositeDisposable()
-        val responseFromApi = createApiService.postItem(price, name, type)
+    private fun postAddedItemToServer(name: String, price: Int, type: String) {
+
+        val authToken = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+            .getString(AUTH_TOKEN_KEY, "no-token-received")
+
+        val responseFromApi = createApiService.postItem(price, name, type, authToken)
 
             disposable.add(responseFromApi
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Toast.makeText(this, "Item added successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Item added successfully",
+                        Toast.LENGTH_SHORT)
+                        .show()
                 },
                     {
-                        Toast.makeText(this, "Transaction failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Transaction failed",
+                            Toast.LENGTH_SHORT)
+                            .show()
+
+                        onLoadingData(false)
                     })
             )
     }
 
     private fun checkIfHasText() {
-        btn_add_item.isEnabled = !mName.isNullOrEmpty() && !mPrice.isNullOrEmpty()
+        btn_add_submit.isEnabled = !mName.isNullOrEmpty() && !mPrice.isNullOrEmpty()
+    }
+
+    private fun onLoadingData(state: Boolean) {
+        item_name.isEnabled = !state
+        item_price.isEnabled = !state
+        btn_add_submit.isEnabled = !state
     }
 }
 

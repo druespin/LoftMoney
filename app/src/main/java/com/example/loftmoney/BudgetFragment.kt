@@ -1,12 +1,16 @@
 package com.example.loftmoney
 
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +34,6 @@ class BudgetFragment : Fragment() {
 
     private val adapter = ItemsAdapter()
     private val disposable = CompositeDisposable()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,32 +89,46 @@ class BudgetFragment : Fragment() {
     }
 
     private fun loadItemsFromServer(type: String) {
+        val sharedPrefs = activity?.getSharedPreferences(getString(R.string.app_name),
+                                                            Context.MODE_PRIVATE)
+
+        val authToken = sharedPrefs!!.getString(AUTH_TOKEN_KEY, "no-token-received")
+        val responseFromApi = ApiService.createApiService.getItems(type, authToken!!)
+
         val chargeList = ArrayList<ChargeModel>()
-        val responseFromApi = ApiService.createApiService.getItems(type)
 
         disposable.add(responseFromApi
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribe(
-                { response ->
-                    if (response.status == "success") {
-                        val dataList = response.data
+            .subscribe({
+                    dataList ->
                         for (dataItem in dataList) {
                             chargeList.add(ChargeModel(dataItem))
                         }
-
                         adapter.setNewData(chargeList)
-
-                    } else {
-                        swipe_refresh.isRefreshing = false
-                        Log.e("ERROR: ", response.status)
-                    }
-                }, {
-                    swipe_refresh.isRefreshing = false
-                    error("NO RESPONSE")
+                },
+                {
+                    it.localizedMessage
                 }
             )
         )
     }
+
+//    private fun removeItem(itemId: String) {
+//        val responseFromApi =
+//            ApiService.createApiService.removeItem(itemId)
+//
+//        disposable.add(responseFromApi
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribeOn(Schedulers.io())
+//            .subscribe({
+//                Toast.makeText(activity, "Item deleted successfully", Toast.LENGTH_SHORT).show()
+//                adapter.notifyDataSetChanged()
+//            },
+//                {
+//                    Toast.makeText(activity, "Transaction failed", Toast.LENGTH_SHORT).show()
+//                })
+//        )
+//    }
 }
 

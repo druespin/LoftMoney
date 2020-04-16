@@ -9,18 +9,36 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
-const val BASE_URL = "https://verdant-violet.glitch.me/"
+const val BASE_URL = "https://loftschool.com/android-api/basic/v1/"
 
 interface ApiService {
 
     @GET("items")
-    fun getItems(@Query("type") type: String): Observable<ResponseItem>
+    fun getItems(@Query("type") type: String,
+                 @Query("auth-token") authToken: String): Observable<List<DataArray>>
+
 
     @POST("items/add")
     @FormUrlEncoded
-    fun postItem(@Field("price") price: Int?,
-                @Field("name") name: String?,
-                @Field("type") type: String?): Completable
+    fun postItem(@Field("price") price: Int,
+                @Field("name") name: String,
+                @Field("type") type: String,
+                @Field("auth-token") authToken: String): Completable
+
+    @POST("items/remove")
+    @FormUrlEncoded
+    fun removeItem(@Field("id") itemId: Int): Completable
+
+
+    @GET("auth")
+    fun getTokenForUser(@Query("social_user_id") userId: String): Observable<AuthResponse>
+
+
+    @GET("logout")
+    fun logout(): Observable<Status>
+
+    @GET("balance")
+    fun getBalance(): Observable<Balance>
 
 
     companion object {
