@@ -4,4 +4,9 @@
     <string name="hint_item_price">Цена</string>
     <string name="add_item">Добавить</string>
     <string name="btn_auth_text">ВОЙТИ</string>
+    <string name="expenses">РАСХОДЫ</string>
+    <string name="incomes">ДОХОДЫ</string>
+    <string name="logout_text">Выйти</string>
+    <string name="toolbar_title">Учет Бюджета</string>
+    <string name="data_placeholder">Данные не добавлены. Чтобы добавить, нажмите желтую кнопку.</string>
 </resources>

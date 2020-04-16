@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View.INVISIBLE
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.loftmoney.web.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -49,7 +50,7 @@ class AuthActivity : AppCompatActivity() {
                     Log.e("TOKEN: ", response.authToken)
 
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    overridePendingTransition(0, R.anim.fade_out)
                 }
                 else {
                     Log.e("STATUS: ", response.status)
@@ -57,7 +58,7 @@ class AuthActivity : AppCompatActivity() {
             },
                 {
 //                    btn_auth.visibility = VISIBLE
-                    it.localizedMessage
+                    Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
                 }
             ))
     }
