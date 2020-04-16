@@ -50,7 +50,7 @@
         android:text="@string/add_item"
         android:textSize="@dimen/add_btn_txt"
         android:textColor="@color/btn_add_text_color"
-        android:background="@color/btn_back_color"
+        android:background="@drawable/btn_add_submit_view"
         android:drawableStart="@drawable/check_add_selector"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
