@@ -1,8 +1,11 @@
 package com.example.loftmoney
 
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -18,6 +21,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_budget.*
+import kotlinx.android.synthetic.main.item_layout.*
 
 
 const val LOFT_TAG = "LOFT"
@@ -90,10 +94,10 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
             getString(R.string.app_name),
             Context.MODE_PRIVATE)
 
-        val authToken = sharedPrefs!!.getString(AUTH_TOKEN_KEY, "no-token-received")
+        val authToken = sharedPrefs?.getString(AUTH_TOKEN_KEY, "no-token-received")
         val responseFromApi = ApiService.createApiService.getItems(type, authToken!!)
 
-        val chargeList = ArrayList<ItemModel>()
+        val itemsList = ArrayList<ItemModel>()
 
         disposable.add(responseFromApi
             .observeOn(AndroidSchedulers.mainThread())
@@ -101,13 +105,9 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
             .subscribe({
                     dataList ->
                         for (dataItem in dataList) {
-                            chargeList.add(
-                                ItemModel(
-                                    dataItem
-                                )
-                            )
+                            itemsList.add(ItemModel(dataItem))
                         }
-                        adapter.setNewData(chargeList)
+                        adapter.setNewData(itemsList)
                 },
                 {
                     it.localizedMessage
@@ -118,21 +118,50 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
 
     override fun onItemClick(position: Int) {
         if (actionMode != null) {
-            adapter.toggleItem(position)
-            actionMode!!.setTitle(getString(R.string.selected, adapter.countSelected().toString()))
+            adapter.toggleItemSelection(position)
+            actionMode?.title = getString(R.string.title_selected,
+                                            adapter.countSelected().toString())
         }
     }
 
     override fun onItemLongClick(position: Int) {
         if (actionMode == null) {
             activity?.startActionMode(this)
+            adapter.toggleItemSelection(position)
+            actionMode?.title = getString(R.string.title_selected,
+                                            adapter.countSelected().toString())
+
         }
-        adapter.toggleItem(position)
+    }
+
+
+    private val confirmClick = { dialog: DialogInterface, which: Int ->
+        removeItems()
+        adapter.clearAllSelections()
+        actionMode?.title = getString(R.string.title_selected,
+                                        adapter.countSelected().toString())
+        if (items.size == 0) {
+            actionMode?.finish()
+        }
+        Log.e(LOFT_TAG, items.size.toString())
+        dialog.cancel()
+    }
+
+    private val cancelClick = { dialog: DialogInterface, which: Int ->
+        dialog.cancel()
     }
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-        if (item?.itemId == R.menu.remove_menu) {
+        if (item?.itemId == R.id.remove_action) {
 
+           AlertDialog.Builder(activity, R.style.AlertDialogStyle)
+                .setTitle(R.string.remove_title)
+                .setMessage(R.string.confirm_remove_message)
+                .setPositiveButton(R.string.ok_text,
+                    DialogInterface.OnClickListener(confirmClick))
+                .setNegativeButton(R.string.cancel_text,
+                    DialogInterface.OnClickListener(cancelClick))
+                .show()
         }
         return true
     }
@@ -152,21 +181,39 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
         adapter.clearAllSelections()
     }
 
-    private fun removeItem(itemId: Int) {
-        val responseFromApi =
-            ApiService.createApiService.removeItem(itemId)
-
-        disposable.add(responseFromApi
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                Toast.makeText(activity, "Item deleted successfully", Toast.LENGTH_SHORT).show()
-            },
-                {
-                    Toast.makeText(activity, "Transaction failed", Toast.LENGTH_SHORT).show()
-                })
+    private fun removeItems() {
+        val authToken = activity?.getSharedPreferences(
+            getString(R.string.app_name), Context.MODE_PRIVATE
         )
-    }
+            ?.getString(AUTH_TOKEN_KEY, "no-token-received")
 
+        for (item in items) {
+            if (adapter.getSelectedItemIds().contains(item.dataId)) {
+
+                val response = ApiService.createApiService.removeItem(item.dataId, authToken)
+
+                disposable.add(response
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe({
+                            if (it.status == "success") {
+                                adapter.removeItem(item)
+                                adapter.notifyDataSetChanged()
+                                Toast.makeText(
+                                    activity, "Items deleted successfully",
+                                    Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        },
+                            {
+                                Toast.makeText(activity,
+                                    "Transaction failed", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        )
+                )
+            }
+        }
+    }
 }
 

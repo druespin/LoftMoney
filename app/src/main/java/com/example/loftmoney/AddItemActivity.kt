@@ -1,14 +1,11 @@
 package com.example.loftmoney
 
 import android.content.Context
-import android.content.res.Resources
-import android.content.res.Resources.Theme
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.loftmoney.web.ApiService.Companion.createApiService
@@ -29,7 +26,7 @@ class AddItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item)
 
-        item_name.addTextChangedListener(object : TextWatcher {
+        add_item_name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 mName = s.toString()
                 checkIfHasText()
@@ -40,7 +37,7 @@ class AddItemActivity : AppCompatActivity() {
             }
         })
 
-        item_price.addTextChangedListener(object : TextWatcher {
+        add_item_price.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 mPrice = s.toString()
                 checkIfHasText()
@@ -55,12 +52,12 @@ class AddItemActivity : AppCompatActivity() {
 
         when (reqType) {
             ADD_EXPENSE_ITEM -> {
-                item_name.setTextColor(resources.getColor(R.color.expense_text_color, theme))
-                item_price.setTextColor(resources.getColor(R.color.expense_text_color, theme))
+                add_item_name.setTextColor(resources.getColor(R.color.expense_text_color, theme))
+                add_item_price.setTextColor(resources.getColor(R.color.expense_text_color, theme))
             }
             ADD_INCOME_ITEM -> {
-                item_name.setTextColor(resources.getColor(R.color.income_text_color, theme))
-                item_price.setTextColor(resources.getColor(R.color.income_text_color, theme))
+                add_item_name.setTextColor(resources.getColor(R.color.income_text_color, theme))
+                add_item_price.setTextColor(resources.getColor(R.color.income_text_color, theme))
             }
         }
 
@@ -90,8 +87,9 @@ class AddItemActivity : AppCompatActivity() {
 
     private fun postAddedItemToServer(name: String, price: Int, type: String) {
 
-        val authToken = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
-            .getString(AUTH_TOKEN_KEY, "no-token-received")
+        val authToken = getSharedPreferences(
+            getString(R.string.app_name),
+            Context.MODE_PRIVATE).getString(AUTH_TOKEN_KEY, "no-token-received")!!
 
         val responseFromApi = createApiService.postItem(price, name, type, authToken)
 
@@ -118,8 +116,8 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     private fun onLoadingData(state: Boolean) {
-        item_name.isEnabled = !state
-        item_price.isEnabled = !state
+        add_item_name.isEnabled = !state
+        add_item_price.isEnabled = !state
         btn_add_submit.isEnabled = !state
     }
 }

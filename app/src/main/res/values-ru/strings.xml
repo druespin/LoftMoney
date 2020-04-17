@@ -9,4 +9,9 @@
     <string name="logout_text">Выйти</string>
     <string name="toolbar_title">Учет Бюджета</string>
     <string name="data_placeholder">Данные не добавлены. Чтобы добавить, нажмите желтую кнопку.</string>
+    <string name="confirm_remove_message">Удалить выбранные записи?</string>
+    <string name="remove_title">Удаление записи</string>
+    <string name="title_selected">Выбрано: %1$s</string>
+    <string name="cancel_text">Cnacel</string>
+    <string name="ok_text">OK</string>
 </resources>

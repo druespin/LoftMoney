@@ -7,10 +7,12 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class ItemModel
-    (val chargeName: String,
-     val chargePrice: String) : Parcelable
+    (val dataId: Int,
+     val itemName: String,
+     val itemPrice: String) : Parcelable
 {
     constructor(dataItem: DataArray): this(
+                dataItem.itemId,
                 dataItem.name,
                 dataItem.price.toString()
     )

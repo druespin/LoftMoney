@@ -1,14 +1,9 @@
 package com.example.loftmoney.adapter
 
-import android.content.res.Resources
-import android.util.SparseArray
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.loftmoney.item_model.ItemModel
 import com.example.loftmoney.R
@@ -20,29 +15,34 @@ class ItemsAdapter(private val itemsList: ArrayList<ItemModel>,
 
     private val mSelectedItems = SparseBooleanArray()
 
+    fun toggleItemSelection(position: Int) {
+        mSelectedItems.put(position, !mSelectedItems.get(position))
+        notifyDataSetChanged()
+    }
+
     fun clearAllSelections() {
         mSelectedItems.clear()
         notifyDataSetChanged()
     }
 
-    fun toggleItem(position: Int) {
-        mSelectedItems.put(position, !mSelectedItems.get(position))
-        notifyDataSetChanged()
-    }
-
-    fun clearItemSelection(position: Int) {
-        mSelectedItems.put(position, false)
-        notifyDataSetChanged()
-    }
-
     fun countSelected(): Int {
         var number = 0
-        for (i in 0..mSelectedItems.size()) {
-            if (mSelectedItems.get(i)) {
+        for (index in 0..mSelectedItems.size()) {
+            if (mSelectedItems.get(index)) {
                 number++
             }
         }
         return number
+    }
+
+    fun getSelectedItemIds(): List<Int> {
+        val mSelectedItemIds = ArrayList<Int>()
+        for (index in itemsList.indices) {
+            if (mSelectedItems[index]) {
+                mSelectedItemIds.add(itemsList[index].dataId)
+            }
+        }
+        return mSelectedItemIds
     }
 
     fun setNewData(newData: List<ItemModel>) {
@@ -56,6 +56,11 @@ class ItemsAdapter(private val itemsList: ArrayList<ItemModel>,
         notifyItemInserted(0)
     }
 
+    fun removeItem(item: ItemModel) {
+        itemsList.remove(item)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_layout, parent, false)
@@ -67,6 +72,10 @@ class ItemsAdapter(private val itemsList: ArrayList<ItemModel>,
         return itemsList.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return itemsList[position].dataId as Long
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(itemsList[position], mSelectedItems.get(position))
     }
@@ -75,12 +84,14 @@ class ItemsAdapter(private val itemsList: ArrayList<ItemModel>,
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view),
         View.OnClickListener, View.OnLongClickListener {
 
-        private val itemName = view.item_name
-        private val itemPrice = view.item_price
+        var itemId: Int? = null
+        private val itemName = view.budget_item_name
+        private val itemPrice = view.budget_item_price
 
         fun bind(itemModel: ItemModel, isSelected: Boolean) {
-            itemName.text = itemModel.chargeName
-            itemPrice.text = itemModel.chargePrice
+            itemId = itemModel.dataId
+            itemName.text = itemModel.itemName
+            itemPrice.text = itemModel.itemPrice
             itemView.isSelected = isSelected
 
             itemView.setOnClickListener(this)
