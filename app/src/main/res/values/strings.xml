@@ -9,4 +9,6 @@
     <string name="btn_auth_text">SIGN IN</string>
     <string name="data_placeholder">No data фвed yet</string>
     <string name="logout_text">Logout</string>
+    <string name="selected">Selected: %1$s</string>
+    <string name="remove_title">Remove</string>
 </resources>

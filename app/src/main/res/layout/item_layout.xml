@@ -7,9 +7,11 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/item_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@drawable/item_background"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
         android:paddingTop="29dp"

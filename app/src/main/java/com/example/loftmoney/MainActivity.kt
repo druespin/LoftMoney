@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
@@ -61,6 +63,19 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActionModeFinished(mode: ActionMode?) {
+        super.onActionModeFinished(mode)
+        tabs.setBackgroundColor(resources.getColor(R.color.colorApp))
+        toolbar.setBackgroundColor(resources.getColor(R.color.colorApp))
+    }
+
+    override fun onActionModeStarted(mode: ActionMode?) {
+        super.onActionModeStarted(mode)
+        tabs.setBackgroundColor(resources.getColor(R.color.action_mode_color))
+        toolbar.setBackgroundColor(resources.getColor(R.color.action_mode_color))
+
     }
 
     private fun doLogout() {

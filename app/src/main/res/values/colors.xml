@@ -12,4 +12,6 @@
     <color name="income_text_color">#7ed321</color>
     <color name="white">#fff</color>
     <color name="btn_add_submit_color">#ddd</color>
+    <color name="action_mode_color">#333f59</color>
+    <color name="item_selected_color">#aeaeae</color>
 </resources>

@@ -6,15 +6,11 @@
         <item name="colorPrimary">@color/colorApp</item>
         <item name="colorPrimaryDark">@color/colorAppDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="android:windowDisablePreview">true</item>
-        <item name="windowActionBar">false</item>
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
-        <item name="android:windowNoTitle">true</item>
 
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeBackground">@color/colorAccent</item>
+        <item name="actionModeBackground">@color/action_mode_color</item>
     </style>
 
     <style name="AddItemTheme" parent="Theme.AppCompat.Light.NoActionBar">

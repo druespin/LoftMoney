@@ -1,4 +1,4 @@
-package com.example.loftmoney
+package com.example.loftmoney.item_model
 
 import android.os.Parcelable
 import com.example.loftmoney.web.DataArray
@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-class ChargeModel
+class ItemModel
     (val chargeName: String,
      val chargePrice: String) : Parcelable
 {
