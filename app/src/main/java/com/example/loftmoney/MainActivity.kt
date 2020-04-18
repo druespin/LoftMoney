@@ -1,13 +1,13 @@
 package com.example.loftmoney
 
-import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -16,7 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.serialization.json.Json.Default.context
+import kotlinx.android.synthetic.main.item_layout.*
 
 const val FRAGMENT_KEY = "fragment"
 
@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
@@ -61,6 +62,19 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActionModeFinished(mode: ActionMode?) {
+        super.onActionModeFinished(mode)
+        tabs.setBackgroundColor(resources.getColor(R.color.colorApp))
+        toolbar.setBackgroundColor(resources.getColor(R.color.colorApp))
+    }
+
+    override fun onActionModeStarted(mode: ActionMode?) {
+        super.onActionModeStarted(mode)
+        tabs.setBackgroundColor(resources.getColor(R.color.action_mode_color))
+        toolbar.setBackgroundColor(resources.getColor(R.color.action_mode_color))
+        btn_fab_main.visibility = View.INVISIBLE
     }
 
     private fun doLogout() {

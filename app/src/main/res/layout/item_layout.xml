@@ -7,33 +7,34 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/item_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@drawable/item_background"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
         android:paddingTop="29dp"
         android:paddingBottom="29dp">
 
         <TextView
-            android:id="@+id/item_name"
+            android:id="@+id/budget_item_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="name"
             android:fontFamily="sans-serif"
             android:textSize="@dimen/item_text_size"
-            android:textColor="@color/item_name_color"/>
+            android:textColor="@color/budget_item_text_color"/>
 
         <TextView
-            android:id="@+id/item_price"
+            android:id="@+id/budget_item_price"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="price"
             android:fontFamily="sans-serif"
             android:textStyle="bold"
             android:textSize="@dimen/item_text_size"
-            android:textColor="@color/item_price_color"
             android:layout_gravity="end"/>
     </LinearLayout>
 

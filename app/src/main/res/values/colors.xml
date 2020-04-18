@@ -9,7 +9,10 @@
     <color name="fab_main_color">#FFC107</color>
     <color name="tabs_text">#fff</color>
     <color name="expense_text_color">#3574fa</color>
-    <color name="income_text_color">#7ed321</color>
+    <color name="income_text_color">#4F993A</color>
     <color name="white">#fff</color>
     <color name="btn_add_submit_color">#ddd</color>
+    <color name="action_mode_color">#333f59</color>
+    <color name="item_selected_color">#aeaeae</color>
+    <color name="budget_item_text_color">#666664</color>
 </resources>

@@ -9,14 +9,16 @@ data class AuthResponse(
 )
 
 data class DataArray (
-    val id: String,
+    @SerializedName("id") val itemId: Int,
     val name: String,
     val price: Int,
     val type: String,
     val date: String
 )
 
-data class Status(val status: String)
+data class Status(val status: String)  // for auth request
+
+data class StatusAndItemId(val status: String, val itemId: Int)  // for remove request
 
 data class Balance(
     val status: String,

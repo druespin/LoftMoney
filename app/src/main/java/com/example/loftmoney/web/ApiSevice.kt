@@ -26,8 +26,8 @@ interface ApiService {
                 @Field("auth-token") authToken: String): Completable
 
     @POST("items/remove")
-    @FormUrlEncoded
-    fun removeItem(@Field("id") itemId: Int): Completable
+    fun removeItem(@Query("id") itemId: Int,
+                   @Query("auth-token") authToken: String?): Observable<StatusAndItemId>
 
 
     @GET("auth")

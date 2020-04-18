@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.loftmoney.web.ApiService
@@ -54,10 +55,11 @@ class AuthActivity : AppCompatActivity() {
                 }
                 else {
                     Log.e("STATUS: ", response.status)
+                    btn_auth.visibility = VISIBLE
                 }
             },
                 {
-//                    btn_auth.visibility = VISIBLE
+                    btn_auth.visibility = VISIBLE
                     Toast.makeText(this, it.localizedMessage, Toast.LENGTH_SHORT).show()
                 }
             ))
