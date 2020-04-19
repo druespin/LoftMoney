@@ -15,5 +15,5 @@
     <string name="ok_text">OK</string>
     <string name="cancel_text">Cancel</string>
     <string name="balance">BALANCE</string>
-    <string name="funds">FUNDS</string>
+    <string name="funds">TOTAL</string>
 </resources>

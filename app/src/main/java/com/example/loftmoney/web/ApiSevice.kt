@@ -27,7 +27,7 @@ interface ApiService {
 
     @POST("items/remove")
     fun removeItem(@Query("id") itemId: Int,
-                   @Query("auth-token") authToken: String?): Observable<StatusAndItemId>
+                   @Query("auth-token") authToken: String): Observable<StatusAndItemId>
 
 
     @GET("auth")
@@ -38,7 +38,7 @@ interface ApiService {
     fun logout(): Observable<Status>
 
     @GET("balance")
-    fun getBalance(): Observable<Balance>
+    fun getBalance(@Query("auth-token") authToken: String): Observable<Balance>
 
 
     companion object {

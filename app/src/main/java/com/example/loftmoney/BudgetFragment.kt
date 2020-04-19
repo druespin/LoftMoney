@@ -77,6 +77,11 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
         loadItems()
     }
 
+    override fun onPause() {
+        super.onPause()
+        actionMode?.finish()
+    }
+
     override fun onStop() {
         super.onStop()
         disposable.clear()
@@ -182,10 +187,9 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
     }
 
     private fun removeItems() {
-        val authToken = activity?.getSharedPreferences(
-            getString(R.string.app_name), Context.MODE_PRIVATE
-        )
-            ?.getString(AUTH_TOKEN_KEY, "no-token-received")
+        val sharedprefs = activity?.getSharedPreferences(
+                                        getString(R.string.app_name), Context.MODE_PRIVATE)
+        val authToken = sharedprefs?.getString(AUTH_TOKEN_KEY, "no-token-received")!!
 
         for (item in items) {
             if (adapter.getSelectedItemIds().contains(item.dataId)) {
