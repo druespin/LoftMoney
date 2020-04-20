@@ -71,18 +71,23 @@ class BalanceFragment : Fragment() {
     }
 
     private fun setFields(expense: Int, income: Int) {
-        val balanceText = (income - expense).toString()
-        val expenseText = expense.toString()
-        val incomeText = income.toString()
+        val balanceText = "${(income - expense)}₽"
+        val expenseText = "${expense}₽"
+        val incomeText = "${income}₽"
         total_balance.text = balanceText
         total_expense.text = expenseText
         total_income.text = incomeText
     }
 
     private fun calculateView(expense: Int, income: Int) {
+        var expenseRate = 0
+        var incomeRate = 0
+
         val total = expense + income
-        val expenseRate: Int = 1000 * expense / total
-        val incomeRate: Int = 1000 * income / total
+        if (total != 0) {
+            expenseRate = 1000 * expense / total
+            incomeRate = 1000 * income / total
+        }
         diagram_view.setRates(expenseRate, incomeRate)
     }
 }

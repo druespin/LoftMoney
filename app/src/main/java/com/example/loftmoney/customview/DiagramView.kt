@@ -19,8 +19,8 @@ class DiagramView : View {
         defStyleAttr
     )
 
-    private var expenseWidth = 50
-    private var incomeWidth = 50
+    private var expenseWidth = 0
+    private var incomeWidth = 0
 
     private val expensePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
