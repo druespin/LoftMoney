@@ -29,7 +29,6 @@ interface ApiService {
     fun removeItem(@Query("id") itemId: Int,
                    @Query("auth-token") authToken: String): Observable<StatusAndItemId>
 
-
     @GET("auth")
     fun getTokenForUser(@Query("social_user_id") userId: String): Observable<AuthResponse>
 

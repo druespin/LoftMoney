@@ -21,7 +21,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 const val FRAGMENT_KEY = "fragment"
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
@@ -84,8 +83,6 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 
     override fun onActionModeFinished(mode: ActionMode?) {
         super.onActionModeFinished(mode)
