@@ -19,3 +19,9 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class com.example.loftmoney.AddItemActivity {*;}
+-keep class com.example.loftmoney.AuthActivity {*;}
+-keep class com.example.loftmoney.BudgetFragment {*;}
+-keep class com.example.loftmoney.MainActivity {*;}
+-keep class com.example.loftmoney.WelcomeActivity {*;}
