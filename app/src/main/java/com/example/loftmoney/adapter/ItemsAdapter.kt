@@ -72,14 +72,9 @@ class ItemsAdapter(private val itemsList: ArrayList<ItemModel>,
         return itemsList.size
     }
 
-    override fun getItemId(position: Int): Long {
-        return itemsList[position].dataId as Long
-    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(itemsList[position], mSelectedItems.get(position))
     }
-
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view),
         View.OnClickListener, View.OnLongClickListener {

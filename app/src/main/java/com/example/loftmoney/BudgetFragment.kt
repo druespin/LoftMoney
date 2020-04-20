@@ -99,8 +99,8 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
             getString(R.string.app_name),
             Context.MODE_PRIVATE)
 
-        val authToken = sharedPrefs?.getString(AUTH_TOKEN_KEY, "no-token-received")
-        val responseFromApi = ApiService.createApiService.getItems(type, authToken!!)
+        val authToken = sharedPrefs?.getString(AUTH_TOKEN_KEY, "no-token-received")!!
+        val responseFromApi = ApiService.createApiService.getItems(type, authToken)
 
         val itemsList = ArrayList<ItemModel>()
 
@@ -135,7 +135,6 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
             adapter.toggleItemSelection(position)
             actionMode?.title = getString(R.string.title_selected,
                                             adapter.countSelected().toString())
-
         }
     }
 
