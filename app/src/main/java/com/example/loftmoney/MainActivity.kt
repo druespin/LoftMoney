@@ -8,19 +8,22 @@ import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.example.loftmoney.web.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_layout.*
 
 const val FRAGMENT_KEY = "fragment"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
     private val disposable = CompositeDisposable()
 
@@ -32,10 +35,13 @@ class MainActivity : AppCompatActivity() {
         view_pager.adapter = BudgetPagerAdapter(supportFragmentManager)
         tabs.setupWithViewPager(view_pager)
 
-        tabs.getTabAt(0)!!.setText(R.string.expenses)
-        tabs.getTabAt(1)!!.setText(R.string.incomes)
+        tabs.getTabAt(0)?.setText(R.string.expenses)
+        tabs.getTabAt(1)?.setText(R.string.incomes)
+        tabs.getTabAt(2)?.setText(R.string.balance)
 
-        /**
+        view_pager.addOnPageChangeListener(this)
+
+    /**
          *  Click Add New Item (Floating Action Button)
          */
         btn_fab_main.setOnClickListener {
@@ -50,6 +56,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onPageSelected(position: Int) {
+        if (view_pager.currentItem == 2) {
+            btn_fab_main.visibility = GONE
+        }
+        else {
+            btn_fab_main.visibility = VISIBLE
+        }
+    }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
@@ -68,6 +88,7 @@ class MainActivity : AppCompatActivity() {
         super.onActionModeFinished(mode)
         tabs.setBackgroundColor(resources.getColor(R.color.colorApp))
         toolbar.setBackgroundColor(resources.getColor(R.color.colorApp))
+        btn_fab_main.visibility = VISIBLE
     }
 
     override fun onActionModeStarted(mode: ActionMode?) {
@@ -106,15 +127,21 @@ class MainActivity : AppCompatActivity() {
     class BudgetPagerAdapter(fm: FragmentManager) :
         FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-        override fun getItem(position: Int): BudgetFragment {
-            val fragment = BudgetFragment()
-            fragment.arguments = Bundle().apply {
+        override fun getItem(position: Int): Fragment {
+            val fragment: Fragment
 
-                putInt(FRAGMENT_KEY, position)
+            if (position == 2) {
+                fragment = BalanceFragment()
+            }
+            else {
+                fragment = BudgetFragment()
+                fragment.arguments = Bundle().apply {
+                    putInt(FRAGMENT_KEY, position)
+                }
             }
             return fragment
         }
 
-        override fun getCount() = 2
+        override fun getCount() = 3
     }
 }

@@ -22,7 +22,7 @@ data class StatusAndItemId(val status: String, val itemId: Int)  // for remove r
 
 data class Balance(
     val status: String,
-    val totalExpense: String,
-    val totalIncome: String
-
+    val balance: Int,
+    @SerializedName("total_income") val totalIncome: String,
+    @SerializedName("total_expenses") val totalExpense: String
 )
