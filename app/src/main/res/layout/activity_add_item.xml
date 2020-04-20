@@ -7,7 +7,7 @@
     tools:context=".AddItemActivity">
 
     <LinearLayout
-        android:layout_above="@+id/add_item_btn"
+        android:layout_above="@+id/btn_add_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="33dp"
@@ -15,24 +15,49 @@
         android:layout_marginBottom="61dp"
         android:orientation="vertical">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/item_name" />
+            android:hint="@string/hint_item_name">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/item_text_size"
+                android:inputType="text"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/item_price" />
+            android:hint="@string/hint_item_price">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_item_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/item_text_size"
+                android:inputType="numberDecimal"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
     </LinearLayout>
 
-
     <Button
-        android:id="@+id/add_item_btn"
+        android:id="@+id/btn_add_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_item"
+        android:textSize="@dimen/add_btn_txt"
+        android:textColor="@color/btn_add_text_color"
+        android:background="@drawable/btn_add_submit_view"
+        android:drawableStart="@drawable/check_add_selector"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:enabled="false"/>
 
 </RelativeLayout>

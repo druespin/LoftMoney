@@ -1,6 +1,18 @@
 <resources>
-    <string name="app_name">LoftMoney</string>
-    <string name="item_name">Name</string>
-    <string name="item_price">Price</string>
-    <string name="add_item">Add</string>
+    <string name="hint_item_name">Name</string>
+    <string name="hint_item_price">Price</string>
+    <string name="add_item"> ADD </string>
+    <string name="expenses">EXPENSES</string>
+    <string name="incomes">INCOMES</string>
+    <string name="toolbar_title">Budget</string>
+    <string name="btn_auth_text">SIGN IN</string>
+    <string name="data_placeholder">No data фвed yet</string>
+    <string name="logout_text">Logout</string>
+    <string name="title_selected">Selected: %1$s</string>
+    <string name="remove_title">Remove Item</string>
+    <string name="confirm_remove_message">Do you really want to remove selected items?</string>
+    <string name="ok_text">OK</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="balance">BALANCE</string>
+    <string name="funds">TOTAL</string>
 </resources>

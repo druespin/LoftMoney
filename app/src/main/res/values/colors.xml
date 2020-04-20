@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorApp">#3574FA</color>
+    <color name="colorAppDark">#3574FA</color>
+    <color name="colorAccent">#FFC107</color>
+
+    <color name="item_name_color">#666664</color>
+    <color name="item_price_color">#4a90e2</color>
+    <color name="fab_main_color">#FFC107</color>
+    <color name="tabs_text">#fff</color>
+    <color name="expense_text_color">#3574fa</color>
+    <color name="income_text_color">#4F993A</color>
+    <color name="white">#fff</color>
+    <color name="btn_add_submit_color">#ddd</color>
+    <color name="action_mode_color">#333f59</color>
+    <color name="item_selected_color">#aeaeae</color>
+    <color name="budget_item_text_color">#666664</color>
+    <color name="funds_color">#ff9e57</color>
 </resources>
