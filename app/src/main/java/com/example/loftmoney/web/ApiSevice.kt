@@ -1,5 +1,6 @@
 package com.example.loftmoney.web
 
+import com.example.loftmoney.BuildConfig
 import io.reactivex.Completable
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
@@ -9,7 +10,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
-const val BASE_URL = "https://loftschool.com/android-api/basic/v1/"
 
 interface ApiService {
 
@@ -52,7 +52,7 @@ interface ApiService {
 
         val createApiService: ApiService = Retrofit.Builder()
             .client(httpClient)
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()

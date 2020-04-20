@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">LoftMoney</string>
     <string name="hint_item_name">Name</string>
     <string name="hint_item_price">Price</string>
     <string name="add_item"> ADD </string>
