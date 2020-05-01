@@ -17,4 +17,5 @@
     <color name="item_selected_color">#aeaeae</color>
     <color name="budget_item_text_color">#666664</color>
     <color name="funds_color">#ff9e57</color>
+    <color name="login_hint_text_color">#b38baaef</color>
 </resources>

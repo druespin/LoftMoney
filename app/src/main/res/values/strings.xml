@@ -17,6 +17,6 @@
     <string name="funds">TOTAL</string>
     <string name="login_prompt_text">Please type your login</string>
     <string name="login_submit_text">SUBMIT</string>
-    <string name="hint_login">Please log in</string>
+    <string name="hint_login">Login</string>
     <string name="appl_name">LoftMoney</string>
 </resources>
