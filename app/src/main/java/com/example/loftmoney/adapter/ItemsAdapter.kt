@@ -72,6 +72,10 @@ class ItemsAdapter(private val itemsList: ArrayList<ItemModel>,
         return itemsList.size
     }
 
+    fun getItems(): List<ItemModel> {
+        return itemsList
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(itemsList[position], mSelectedItems.get(position))
     }

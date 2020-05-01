@@ -40,6 +40,7 @@ android {
         }
     }
 
+
     flavorDimensions "target"
 
     productFlavors {
@@ -52,6 +53,7 @@ android {
             applicationIdSuffix ".beta"
         }
     }
+
 }
 
 dependencies {

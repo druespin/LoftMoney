@@ -19,13 +19,10 @@ import com.example.loftmoney.web.ApiService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_budget.*
-import kotlinx.android.synthetic.main.item_layout.*
 
 
 const val LOFT_TAG = "LOFT"
-const val EXTRA_KEY = "extra key"
 const val ADD_EXPENSE_ITEM = "expense"
 const val ADD_INCOME_ITEM = "income"
 
@@ -85,6 +82,7 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
     override fun onStop() {
         super.onStop()
         disposable.clear()
+        actionMode?.finish()
     }
 
     private fun loadItems() {
@@ -96,7 +94,7 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
 
     private fun loadItemsFromServer(type: String) {
         val sharedPrefs = activity?.getSharedPreferences(
-            getString(R.string.app_name),
+            getString(R.string.appl_name),
             Context.MODE_PRIVATE)
 
         val authToken = sharedPrefs?.getString(AUTH_TOKEN_KEY, "no-token-received")!!
@@ -139,32 +137,37 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
     }
 
 
-    private val confirmClick = { dialog: DialogInterface, which: Int ->
+    private val confirmRemove = { dialog: DialogInterface, which: Int ->
         removeItems()
         adapter.clearAllSelections()
         actionMode?.title = getString(R.string.title_selected,
                                         adapter.countSelected().toString())
-        if (items.size == 0) {
+        loadItems()
+
+        if (adapter.itemCount == 0) {
             actionMode?.finish()
         }
-        Log.e(LOFT_TAG, items.size.toString())
+        for (item in adapter.getItems()) {
+            Log.e(LOFT_TAG, "${item.itemName}, ${item.itemPrice}")
+        }
         dialog.cancel()
     }
 
-    private val cancelClick = { dialog: DialogInterface, which: Int ->
+    private val cancelRemove = { dialog: DialogInterface, which: Int ->
         dialog.cancel()
     }
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         if (item?.itemId == R.id.remove_action) {
+            adapter.notifyDataSetChanged()
 
            AlertDialog.Builder(activity, R.style.AlertDialogStyle)
                 .setTitle(R.string.remove_title)
                 .setMessage(R.string.confirm_remove_message)
                 .setPositiveButton(R.string.ok_text,
-                    DialogInterface.OnClickListener(confirmClick))
+                    DialogInterface.OnClickListener(confirmRemove))
                 .setNegativeButton(R.string.cancel_text,
-                    DialogInterface.OnClickListener(cancelClick))
+                    DialogInterface.OnClickListener(cancelRemove))
                 .show()
         }
         return true
@@ -187,7 +190,7 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
 
     private fun removeItems() {
         val sharedprefs = activity?.getSharedPreferences(
-                                        getString(R.string.app_name), Context.MODE_PRIVATE)
+                                        getString(R.string.appl_name), Context.MODE_PRIVATE)
         val authToken = sharedprefs?.getString(AUTH_TOKEN_KEY, "no-token-received")!!
 
         for (item in items) {
@@ -203,7 +206,7 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
                                 adapter.removeItem(item)
                                 adapter.notifyDataSetChanged()
                                 Toast.makeText(
-                                    activity, "Items deleted successfully",
+                                    activity, "Items removed successfully",
                                     Toast.LENGTH_SHORT)
                                     .show()
                             }
@@ -216,6 +219,7 @@ class BudgetFragment : Fragment(), ItemClickListener, ActionMode.Callback {
                         )
                 )
             }
+            else { Log.e(LOFT_TAG, "${item.dataId} not found")}
         }
     }
 }

@@ -22,6 +22,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 const val FRAGMENT_KEY = "fragment"
+const val ADD_ITEM_KEY = "add-item-key"
 
 class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
@@ -41,15 +42,15 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
         view_pager.addOnPageChangeListener(this)
 
-    /**
+        /**
          *  Click Add New Item (Floating Action Button)
          */
         btn_fab_main.setOnClickListener {
             val intent = Intent(this, AddItemActivity::class.java)
 
             when (view_pager.currentItem) {
-                0 -> intent.putExtra(EXTRA_KEY, ADD_EXPENSE_ITEM)
-                1 -> intent.putExtra(EXTRA_KEY, ADD_INCOME_ITEM)
+                0 -> intent.putExtra(ADD_ITEM_KEY, ADD_EXPENSE_ITEM)
+                1 -> intent.putExtra(ADD_ITEM_KEY, ADD_INCOME_ITEM)
             }
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -84,6 +85,13 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onActionModeStarted(mode: ActionMode?) {
+        super.onActionModeStarted(mode)
+        tabs.setBackgroundColor(resources.getColor(R.color.action_mode_color))
+        toolbar.setBackgroundColor(resources.getColor(R.color.action_mode_color))
+        btn_fab_main.visibility = View.INVISIBLE
+    }
+
     override fun onActionModeFinished(mode: ActionMode?) {
         super.onActionModeFinished(mode)
         tabs.setBackgroundColor(resources.getColor(R.color.colorApp))
@@ -91,12 +99,6 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener {
         btn_fab_main.visibility = VISIBLE
     }
 
-    override fun onActionModeStarted(mode: ActionMode?) {
-        super.onActionModeStarted(mode)
-        tabs.setBackgroundColor(resources.getColor(R.color.action_mode_color))
-        toolbar.setBackgroundColor(resources.getColor(R.color.action_mode_color))
-        btn_fab_main.visibility = View.INVISIBLE
-    }
 
     private fun doLogout() {
         val logoutRequest = ApiService.createApiService.logout()

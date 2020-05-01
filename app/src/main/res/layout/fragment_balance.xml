@@ -9,8 +9,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="24dp"
-        android:paddingTop="54dp"
-        android:paddingBottom="40dp">
+        android:paddingTop="36dp"
+        android:paddingBottom="36dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -87,10 +87,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:orientation="vertical"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
-        android:paddingTop="40dp">
+        android:paddingBottom="24dp">
 
         <com.example.loftmoney.customview.DiagramView
             android:id="@+id/diagram_view"

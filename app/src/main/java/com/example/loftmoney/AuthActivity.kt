@@ -4,6 +4,8 @@ package com.example.loftmoney
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
@@ -21,6 +23,7 @@ const val AUTH_TOKEN_KEY = "auth-token-key"
 class AuthActivity : AppCompatActivity() {
 
     private val disposable = CompositeDisposable()
+    private var userId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +31,29 @@ class AuthActivity : AppCompatActivity() {
 
         btn_auth.setOnClickListener {
 
-            doSignIn()
+            if (userId.isNotEmpty()) {
+                doSignIn(userId)
+            }
         }
+
+        login_input.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                userId = s.toString()
+
+                btn_auth.isEnabled = login_input.text.isNotEmpty()
+
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
     }
 
-    private fun doSignIn() {
+
+    private fun doSignIn(userId: String) {
         btn_auth.visibility = INVISIBLE
-        val getAuthRequest = ApiService.createApiService.getTokenForUser("drue")
+        val getAuthRequest = ApiService.createApiService.getTokenForUser(userId)
 
         disposable.add(getAuthRequest
             .observeOn(AndroidSchedulers.mainThread())
@@ -43,7 +62,7 @@ class AuthActivity : AppCompatActivity() {
                 response ->
                 if (response.status == "success") {
 
-                    getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE)
+                    getSharedPreferences(getString(R.string.appl_name), Context.MODE_PRIVATE)
                         .edit()
                         .putString(AUTH_TOKEN_KEY, response.authToken)
                         .apply()

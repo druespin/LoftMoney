@@ -48,7 +48,7 @@ class AddItemActivity : AppCompatActivity() {
             }
         })
 
-        val reqType = intent.getStringExtra(EXTRA_KEY)
+        val reqType = intent.getStringExtra(ADD_ITEM_KEY)
 
         when (reqType) {
             ADD_EXPENSE_ITEM -> {
@@ -61,17 +61,16 @@ class AddItemActivity : AppCompatActivity() {
             }
         }
 
-        // ADD item button listener
+        /**
+         * ADD item button listener
+         */
         btn_add_submit.setOnClickListener{
-
             onLoadingData(true)
 
             if (mName.isNullOrEmpty() || mPrice.isNullOrEmpty()) {
                 Toast.makeText(this, "Both fields should be populated", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
-            // Send new item to server
             postAddedItemToServer(mName.toString(),
                 Integer.parseInt(mPrice.toString()),
                 reqType)
@@ -87,9 +86,9 @@ class AddItemActivity : AppCompatActivity() {
 
     private fun postAddedItemToServer(name: String, price: Int, type: String) {
 
-        val authToken = getSharedPreferences(
-            getString(R.string.app_name),
-            Context.MODE_PRIVATE).getString(AUTH_TOKEN_KEY, "no-token-received")!!
+        val authToken = getSharedPreferences(getString(R.string.appl_name),
+            Context.MODE_PRIVATE)
+            .getString(AUTH_TOKEN_KEY, "no-token-received")!!
 
         val responseFromApi = createApiService.postItem(price, name, type, authToken)
 

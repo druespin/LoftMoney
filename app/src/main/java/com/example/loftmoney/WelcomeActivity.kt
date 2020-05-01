@@ -14,7 +14,7 @@ class WelcomeActivity: AppCompatActivity() {
         setContentView(R.layout.activity_welcome)
 
         val sharedPrefs = getSharedPreferences(
-            getString(R.string.app_name), Context.MODE_PRIVATE)
+            getString(R.string.appl_name), Context.MODE_PRIVATE)
 
         val authToken = sharedPrefs.getString(AUTH_TOKEN_KEY, "")
 

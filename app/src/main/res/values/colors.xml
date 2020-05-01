@@ -12,6 +12,7 @@
     <color name="income_text_color">#4F993A</color>
     <color name="white">#fff</color>
     <color name="btn_add_submit_color">#ddd</color>
+    <color name="btn_login_submit_color">#ddd</color>
     <color name="action_mode_color">#333f59</color>
     <color name="item_selected_color">#aeaeae</color>
     <color name="budget_item_text_color">#666664</color>

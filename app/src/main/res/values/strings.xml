@@ -6,13 +6,17 @@
     <string name="incomes">INCOMES</string>
     <string name="toolbar_title">Budget</string>
     <string name="btn_auth_text">SIGN IN</string>
-    <string name="data_placeholder">No data фвed yet</string>
+    <string name="data_placeholder">No data saved yet</string>
     <string name="logout_text">Logout</string>
     <string name="title_selected">Selected: %1$s</string>
     <string name="remove_title">Remove Item</string>
-    <string name="confirm_remove_message">Do you really want to remove selected items?</string>
+    <string name="confirm_remove_message">Selected items will be removed. Continue?</string>
     <string name="ok_text">OK</string>
     <string name="cancel_text">Cancel</string>
     <string name="balance">BALANCE</string>
     <string name="funds">TOTAL</string>
+    <string name="login_prompt_text">Please type your login</string>
+    <string name="login_submit_text">SUBMIT</string>
+    <string name="hint_login">Please log in</string>
+    <string name="appl_name">LoftMoney</string>
 </resources>

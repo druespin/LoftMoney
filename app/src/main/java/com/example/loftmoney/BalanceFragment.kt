@@ -45,7 +45,7 @@ class BalanceFragment : Fragment() {
 
     private fun getBalance() {
         val sharedPrefs = activity?.getSharedPreferences(
-                                            getString(R.string.app_name), Context.MODE_PRIVATE)
+                                            getString(R.string.appl_name), Context.MODE_PRIVATE)
         val authToken = sharedPrefs?.getString(AUTH_TOKEN_KEY, "no-token")!!
         val getResponseFromApi = ApiService.createApiService.getBalance(authToken)
 

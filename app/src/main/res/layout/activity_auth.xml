@@ -7,7 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="150dp"
         android:orientation="vertical">
 
         <ImageView
@@ -16,12 +17,18 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_diamond" />
 
-        <TextView
-            style="@style/AuthNameTextStyle"
+
+        <EditText
+            android:id="@+id/login_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/app_name" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/item_text_size"
+            android:textColor="@color/white"
+            android:layout_marginTop="18dp"
+            android:hint="@string/hint_login"/>
+
 
         <Button
             android:id="@+id/btn_auth"
@@ -31,7 +38,7 @@
             android:layout_marginTop="18dp"
             android:background="@drawable/auth_btn_view"
             android:text="@string/btn_auth_text"
-            android:textColor="#3574FA" />
+            android:textColor="@color/btn_auth_text_color" />
     </LinearLayout>
 
 </FrameLayout>
